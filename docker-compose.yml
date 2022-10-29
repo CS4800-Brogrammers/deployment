@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  backend:
+    build: ./lowkey-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./lowkey-backend:/backend
+    command: bash -c "python manage.py runserver 0.0.0.0:8000"
+
+  frontend:
+    build: ./lowkey-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./lowkey-frontend:/frontend
+    depends_on:
+      - backend
+
+  test:
+    image: ubuntu
+    command: tail -F anything
